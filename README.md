@@ -1,2 +1,2 @@
 # WhoWantsToBeAMillionaire
-Created using android studio, java, firebase, and SQLite
+Created using android studio, java, firebase, and android canvas
