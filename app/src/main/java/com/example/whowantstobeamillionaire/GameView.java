@@ -1,18 +1,14 @@
 package com.example.whowantstobeamillionaire;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.Window;
-import android.view.WindowManager;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     GameThread gameThread;
+    SurfaceHolder surfaceHolder;
 
     public GameView(Context context) {
         super(context);
@@ -20,10 +16,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     private void initView() {
-        SurfaceHolder holder = getHolder();
-        holder.addCallback(this);
+        surfaceHolder = getHolder();
         setFocusable(true);
-        gameThread = new GameThread(holder);
+        gameThread = new GameThread(surfaceHolder);
     }
 
     @Override

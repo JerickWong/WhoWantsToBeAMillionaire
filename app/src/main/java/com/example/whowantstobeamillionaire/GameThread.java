@@ -26,9 +26,12 @@ public class GameThread extends Thread {
             Canvas canvas = surfaceHolder.lockCanvas(null);
             if(canvas != null) {
                 synchronized (canvas) {
-//                    AppConstants.getGameEngine().updateAndDrawBackgroundImage(canvas);
-//                    AppConstants.getGameEngine().updateAndDrawBird(canvas);
-//                    AppConstants.getGameEngine().updateAndDrawTubes(canvas);
+                    AppConstants.getGameEngine().drawBackground(canvas);
+                    AppConstants.getGameEngine().drawQuestionBox(canvas);
+                    AppConstants.getGameEngine().drawFirstChoice(canvas);
+                    AppConstants.getGameEngine().drawSecondChoice(canvas);
+                    AppConstants.getGameEngine().drawThirdChoice(canvas);
+                    AppConstants.getGameEngine().drawFourthChoice(canvas);
 
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }

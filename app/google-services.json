@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "108306903369",
+    "firebase_url": "https://mobwwtbam.firebaseio.com",
+    "project_id": "mobwwtbam",
+    "storage_bucket": "mobwwtbam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108306903369:android:1b3d7c9d2a6e870b932a98",
+        "android_client_info": {
+          "package_name": "com.example.whowantstobeamillionaire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108306903369-kir43v2nna1s35t10tjonrf57bbqmu7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.whowantstobeamillionaire",
+            "certificate_hash": "a077e394957230b703e2f38739849ed504371afc"
+          }
+        },
+        {
+          "client_id": "108306903369-ifgvmsp2p62ftbn8fmk5fg9utjcjihdt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_oAVeu5G8QJiqmemwR7wbEGeDrOhlR8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108306903369-ifgvmsp2p62ftbn8fmk5fg9utjcjihdt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
