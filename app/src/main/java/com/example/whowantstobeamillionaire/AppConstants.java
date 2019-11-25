@@ -9,10 +9,11 @@ public class AppConstants {
     static GameEngine gameEngine;
     static int SCREEN_WIDTH, SCREEN_HEIGHT;
     static Context context;
-    static int TEXT_SIZE;
+    static BitmapBank bitmapBank;
 
     public static void initialization(Context context){
         setScreenSize(context);
+        bitmapBank = new BitmapBank(context.getResources());
         gameEngine = new GameEngine();
     }
 
@@ -27,8 +28,4 @@ public class AppConstants {
         AppConstants.SCREEN_HEIGHT = height;
     }
 
-    // Return GameEngine instance
-    public static GameEngine getGameEngine(){
-        return gameEngine;
-    }
 }

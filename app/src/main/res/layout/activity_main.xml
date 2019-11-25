@@ -10,15 +10,15 @@
 
     <ImageButton
         android:id="@+id/logo"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:cropToPadding="false"
         android:layout_gravity="center"
         android:src="@drawable/logo"
-        android:background="null"
-        android:layout_marginBottom="-45dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:onClick="startGame"/>
 
     <TextView
@@ -29,7 +29,7 @@
         android:textColor="#ffffff"
         android:layout_gravity="center"
         android:textStyle="bold"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
         android:layout_marginBottom="-25dp"/>
 
     <LinearLayout
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="85dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/elementbackground"
         android:orientation="vertical"
@@ -115,9 +115,10 @@
     </LinearLayout>
 
     <TextView
+        android:layout_marginTop="50dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="center"
-        android:text="Version 0.0.0" />
+        android:text="Version 0.0.1" />
 </LinearLayout>
