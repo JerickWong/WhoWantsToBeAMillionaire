@@ -63,6 +63,7 @@
             android:lineSpacingExtra="60dp"
             android:id="@+id/textNewGame"
             android:textStyle="bold"
+            android:onClick="startGame"
 
             />
     </LinearLayout>
@@ -88,6 +89,7 @@
             android:lineSpacingExtra="60dp"
             android:id="@+id/textHelp"
             android:textStyle="bold"
+            android:onClick="help"
             />
     </LinearLayout>
 

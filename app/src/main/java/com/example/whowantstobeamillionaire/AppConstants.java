@@ -6,10 +6,10 @@ import android.view.Display;
 import android.view.WindowManager;
 
 public class AppConstants {
-    static GameEngine gameEngine;
-    static int SCREEN_WIDTH, SCREEN_HEIGHT;
-    static Context context;
-    static BitmapBank bitmapBank;
+    public static GameEngine gameEngine;
+    public static int SCREEN_WIDTH, SCREEN_HEIGHT;
+    public static Context context;
+    public static BitmapBank bitmapBank;
 
     public static void initialization(Context context){
         setScreenSize(context);
@@ -28,4 +28,11 @@ public class AppConstants {
         AppConstants.SCREEN_HEIGHT = height;
     }
 
+    public static GameEngine getGameEngine() {
+        return gameEngine;
+    }
+
+    public static BitmapBank getBitmapBank() {
+        return bitmapBank;
+    }
 }

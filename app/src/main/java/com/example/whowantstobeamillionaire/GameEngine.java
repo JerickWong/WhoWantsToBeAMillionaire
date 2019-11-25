@@ -35,6 +35,14 @@ public class GameEngine {
         lifeline_switchQuestion = true;
     }
 
+    public void nextQuestion(Canvas canvas){
+        drawQuestionBox(canvas);
+        drawFirstChoice(canvas);
+        drawSecondChoice(canvas);
+        drawThirdChoice(canvas);
+        drawFourthChoice(canvas);
+    }
+
     public void drawBackground(Canvas canvas){
         canvas.drawBitmap(AppConstants.getBitmapBank().getBackground(), AppConstants.getBitmapBank().getBackgroundWidth(), AppConstants.getBitmapBank().getBackgroundHeight(), null);
     }

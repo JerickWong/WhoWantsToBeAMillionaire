@@ -1,5 +1,6 @@
 package com.example.whowantstobeamillionaire;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -7,12 +8,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
 
     GameView gameView;
+
+    static TextView countDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,5 +48,11 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return false;
+    }
+
+    public void exit(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

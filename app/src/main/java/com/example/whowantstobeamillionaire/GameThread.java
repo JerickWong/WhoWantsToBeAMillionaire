@@ -40,11 +40,21 @@ public class GameThread extends Thread {
             loopTime = SystemClock.uptimeMillis() - startTime;
             // Pausing here to make sure we update the right amount per second
             if(loopTime < DELAY){
-                try{
-                    Thread.sleep(DELAY - loopTime);
-                }catch(InterruptedException e){
-                    Log.e("Interrupted","Interrupted while sleeping");
-                }
+                runTimer();
+            }
+        }
+    }
+
+    public void runTimer() {
+        int timer = 60;
+
+        while(timer > 0) {
+            GameActivity.countDown.setText(timer);
+            try{
+                timer--;
+                Thread.sleep(60000L);
+            } catch (InterruptedException e) {
+                Log.e("Interrupted","Interrupted while sleeping");
             }
         }
     }
