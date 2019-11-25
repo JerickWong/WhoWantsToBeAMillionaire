@@ -19,4 +19,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void help(View view) {
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

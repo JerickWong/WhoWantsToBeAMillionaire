@@ -26,4 +26,8 @@ public class GameEngine {
         random = new Random();
         playerScore = 0;
     }
+
+    public void startGame() {
+
+    }
 }

@@ -20,5 +20,6 @@ public class GameActivity extends AppCompatActivity {
         AppConstants.context = this;
         gameView = new GameView(this);
         setContentView(gameView);
+        AppConstants.initialization(this);
     }
 }

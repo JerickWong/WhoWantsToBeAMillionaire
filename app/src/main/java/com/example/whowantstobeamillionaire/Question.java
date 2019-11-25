@@ -8,8 +8,9 @@ public class Question {
     private String optionC;
     private String optionD;
     private int scoreWorth;
+    private String category;
 
-    public Question (String ques, String ans, String A, String B, String C, String D, int worth) {
+    public Question (String ques, String ans, String A, String B, String C, String D, int worth, String categ) {
         question = ques;
         answer = ans;
         optionA = A;
@@ -17,6 +18,7 @@ public class Question {
         optionC = C;
         optionD = D;
         scoreWorth = worth;
+        category = categ;
     }
 
     public String getQuestion() {
@@ -45,5 +47,9 @@ public class Question {
 
     public String getOptionD() {
         return optionD;
+    }
+
+    public String getCategory() {
+        return category;
     }
 }

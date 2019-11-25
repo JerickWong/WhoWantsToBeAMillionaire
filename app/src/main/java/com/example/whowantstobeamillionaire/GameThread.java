@@ -6,12 +6,12 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
-    SurfaceHolder surfaceHolder; //Surfaceholder object reference
-    boolean isRunning; // Flag to detect whether the thread is running or not
-    long startTime, loopTime; // Loop start time and loop duration
-    long DELAY = 33; // Delay in milliseconds between screen refreshes
+    private SurfaceHolder surfaceHolder; //Surfaceholder object reference
+    private boolean isRunning; // Flag to detect whether the thread is running or not
+    private long startTime, loopTime; // Loop start time and loop duration
+    private long DELAY = 33; // Delay in milliseconds between screen refreshes
 
-    public GameThread(SurfaceHolder holder) {
+    public GameThread(SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
         isRunning = true;
     }
