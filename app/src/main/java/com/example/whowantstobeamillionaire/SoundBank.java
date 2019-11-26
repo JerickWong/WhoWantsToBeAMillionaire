@@ -19,17 +19,17 @@ public class SoundBank {
 //        hit = MediaPlayer.create(context, R.raw.hit);
 //        wing = MediaPlayer.create(context, R.raw.wing);
 
-        oneMillion = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/oneMillion"));
-        hundred = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/1001000-music"));
-        twoThousand = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/200032000"));
-        fiveHundredThousand = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/5000000-music"));
-        sixtyFourThousand = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/64000-music"));
-        commercialBreak = MediaPlayer.create(context,  Uri.parse("android.resource://app/res/raw/commercial-break"));
-        correctAnswer = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/correct-answer"));
-        finalAnswer = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/final-answer"));
-        letsPlay = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/lets-play"));
-        mainTheme = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/main-theme"));
-        wrongAnswer = MediaPlayer.create(context, Uri.parse("android.resource://app/res/raw/wrong-answer"));
+        oneMillion = MediaPlayer.create(context, R.raw.onemillion);
+        hundred = MediaPlayer.create(context, R.raw.hundred);
+        twoThousand = MediaPlayer.create(context, R.raw.twothousand);
+        fiveHundredThousand = MediaPlayer.create(context, R.raw.fivehundredthousand);
+        sixtyFourThousand = MediaPlayer.create(context, R.raw.sixtyfourthousand);
+        commercialBreak = MediaPlayer.create(context,  R.raw.commerical_break);
+        correctAnswer = MediaPlayer.create(context, R.raw.correct_answer);
+        finalAnswer = MediaPlayer.create(context, R.raw.final_answer);
+        letsPlay = MediaPlayer.create(context, R.raw.lets_play);
+        mainTheme = MediaPlayer.create(context, R.raw.main_theme);
+        wrongAnswer = MediaPlayer.create(context, R.raw.wrong_answer);
     }
 
     public void playOneMillion(){
