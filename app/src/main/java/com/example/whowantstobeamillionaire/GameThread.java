@@ -26,13 +26,7 @@ public class GameThread extends Thread {
             Canvas canvas = surfaceHolder.lockCanvas(null);
             if(canvas != null) {
                 synchronized (canvas) {
-                    AppConstants.getGameEngine().drawBackground(canvas);
-                    AppConstants.getGameEngine().drawQuestionBox(canvas);
-                    AppConstants.getGameEngine().drawFirstChoice(canvas);
-                    AppConstants.getGameEngine().drawSecondChoice(canvas);
-                    AppConstants.getGameEngine().drawThirdChoice(canvas);
-                    AppConstants.getGameEngine().drawFourthChoice(canvas);
-
+                    AppConstants.getGameEngine().nextQuestion(canvas);
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }
             }
@@ -47,16 +41,29 @@ public class GameThread extends Thread {
 
     public void runTimer() {
         int timer = 60;
+        Thread thread = new Thread ();
+        // wait for delay
+        try {
+            thread.sleep(DELAY - loopTime);
+        } catch (InterruptedException e) {
+            Log.e("Interrupted", "Interrupted wile sleeping");
+        }
 
+        // 60 seconds timer
         while(timer > 0) {
             GameActivity.countDown.setText(timer);
             try{
                 timer--;
-                Thread.sleep(60000L);
+                thread.sleep(60000L);   // 60 second timer
+
             } catch (InterruptedException e) {
-                Log.e("Interrupted","Interrupted while sleeping");
+                break;
             }
         }
+    }
+
+    public void interrupt() {
+
     }
 
     // Return whether the thread is running

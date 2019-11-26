@@ -1,24 +1,28 @@
 package com.example.whowantstobeamillionaire;
 
 public class Question {
+    private String ID;
     private String question;
     private String answer;
     private String optionA;
     private String optionB;
     private String optionC;
     private String optionD;
-    private int scoreWorth;
     private String category;
 
-    public Question (String ques, String ans, String A, String B, String C, String D, int worth, String categ) {
+    public Question (String id, String ques, String ans, String A, String B, String C, String D, String categ) {
+        ID = id;
         question = ques;
         answer = ans;
         optionA = A;
         optionB = B;
         optionC = C;
         optionD = D;
-        scoreWorth = worth;
         category = categ;
+    }
+
+    public String getID() {
+        return ID;
     }
 
     public String getQuestion() {
@@ -27,10 +31,6 @@ public class Question {
 
     public String getAnswer() {
         return answer;
-    }
-
-    public int getScoreWorth() {
-        return scoreWorth;
     }
 
     public String getOptionA() {
