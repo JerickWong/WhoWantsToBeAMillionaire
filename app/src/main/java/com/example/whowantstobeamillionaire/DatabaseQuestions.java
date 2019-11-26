@@ -16,7 +16,13 @@ public class DatabaseQuestions {
         addingQuestions();
     }
 
-    public static void questionsList() {
+    public static void addQuestion(String question, String answer, String A, String B, String C, String D, String category) {
+        String id = databaseQuestions.push().getKey();
+        Question ques = new Question(id, question, answer, A, B, C, D, category);
+        databaseQuestions.child(id).setValue(ques);
+    }
+
+    private static void questionsList() {
         String id = databaseQuestions.push().getKey();
         String question = "What is the largest continent of the world?";
         String answer = "Asia";
@@ -139,47 +145,62 @@ public class DatabaseQuestions {
         questions.add(q);
 
         id = databaseQuestions.push().getKey();
-        question = "";
-        answer = "";
-        optionA = "";
-        optionB = "";
-        optionC = "";
-        optionD = "";
+        question = "Who was the only female solo artist to have a #1 hit single without releasing an album?";
+        answer = "Lisa Loeb";
+        optionA = "Lisa Loeb";
+        optionB = "Sarah McLachlan";
+        optionC = "Gwen Stefani";
+        optionD = "Lauryn Hill";
         category = "15,000";
         q = new Question(id, question, answer, optionA, optionB, optionC, optionD,category);
         questions.add(q);
 
         id = databaseQuestions.push().getKey();
-        question = "";
-        answer = "";
-        optionA = "";
-        optionB = "";
-        optionC = "";
-        optionD = "";
+        question = "Who is the first volleyball player of the United States who won three Olympic Gold Medals?";
+        answer = "Karch Kiraly";
+        optionA = "Karch Kiraly";
+        optionB = "Kerri Walsh Jennings";
+        optionC = "Maxwell Holt";
+        optionD = "Aaron Russell";
         category = "15,000";
         q = new Question(id, question, answer, optionA, optionB, optionC, optionD,category);
         questions.add(q);
 
         id = databaseQuestions.push().getKey();
-        question = "";
-        answer = "";
-        optionA = "";
-        optionB = "";
-        optionC = "";
-        optionD = "";
+        question = "What martial artist warblse the theme song for Walker, Texas Ranger?";
+        answer = "Chuck Norris";
+        optionA = "Chuck Norris";
+        optionB = "Bruce Lee";
+        optionC = "Jackie Chan";
+        optionD = "Jet Li";
         category = "15,000";
+        q = new Question(id, question, answer, optionA, optionB, optionC, optionD,category);
+        questions.add(q);
+
+        id = databaseQuestions.push().getKey();
+        question = "For which movie Tom Hanks nominated in third time in Oscars, 1996?";
+        answer = "Apollo 13";
+        optionA = "Apollo 13";
+        optionB = "That Thing You Do!";
+        optionC = "Toy Story";
+        optionD = "Forrest Gump";
+        category = "1,000,000";
+        q = new Question(id, question, answer, optionA, optionB, optionC, optionD,category);
+        questions.add(q);
+
+        id = databaseQuestions.push().getKey();
+        question = "Which war movie won the Academy Award for Best Picture in 2009?";
+        answer = "The Hurt Locker";
+        optionA = "The Hurt Locker";
+        optionB = "Brothers";
+        optionC = "War Horse";
+        optionD = "Green Zone";
+        category = "1,000,000";
         q = new Question(id, question, answer, optionA, optionB, optionC, optionD,category);
         questions.add(q);
     }
 
-    public static void addQuestion(String question, String answer, String A, String B, String C, String D, String category) {
-//        DatabaseReference databaseQuestions = FirebaseDatabase.getInstance().getReference("questions");
-        String id = databaseQuestions.push().getKey();
-        Question ques = new Question(id, question, answer, A, B, C, D, category);
-        databaseQuestions.child(id).setValue(ques);
-    }
-
-    public static void addingQuestions() {
+    private static void addingQuestions() {
         for (Question question: questions) {
             String ID = question.getID();
             databaseQuestions.child(ID).setValue(question);
