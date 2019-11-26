@@ -10,11 +10,13 @@ public class AppConstants {
     public static int SCREEN_WIDTH, SCREEN_HEIGHT;
     public static Context context;
     public static BitmapBank bitmapBank;
+    public static SoundBank soundBank;
 
     public static void initialization(Context context){
         setScreenSize(context);
         bitmapBank = new BitmapBank(context.getResources());
         gameEngine = new GameEngine();
+        soundBank = new SoundBank(context);
     }
 
     private static void setScreenSize(Context context) {
@@ -35,4 +37,6 @@ public class AppConstants {
     public static BitmapBank getBitmapBank() {
         return bitmapBank;
     }
+
+    public static SoundBank getSoundbank() { return soundBank; }
 }
