@@ -65,7 +65,7 @@
             android:text="@string/start_game"
             android:textColor="@drawable/girisbuttontextcolor"
             android:background="@drawable/girisbutton"
-            android:onClick="yeniOyun"
+            android:onClick="startGame"
             android:layout_height="1dp" />
 
 
@@ -75,17 +75,8 @@
             android:layout_weight="1"
             android:text="@string/highest_score"
             android:id="@+id/yuksekscorlar"
-            android:onClick="yuksekScore"
+            android:onClick="showHighScores"
             android:layout_margin="5dp"
-            android:textColor="@drawable/girisbuttontextcolor"
-            android:background="@drawable/girisbutton"
-            android:layout_height="1dp" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:onClick="otherprograms"
-            android:text="@string/other_programs"
             android:textColor="@drawable/girisbuttontextcolor"
             android:background="@drawable/girisbutton"
             android:layout_height="1dp" />
