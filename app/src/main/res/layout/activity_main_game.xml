@@ -27,7 +27,7 @@
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_marginLeft="5dp"
-                android:id="@+id/yariyariya"
+                android:id="@+id/lifeline5050"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/yuzdeelli"
                 android:scaleType="fitCenter"
@@ -38,7 +38,7 @@
                 android:layout_width="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:id="@+id/seyircisor"
+                android:id="@+id/lifelineDoubleDip"
                 android:src="@drawable/seyirci"
                 android:scaleType="fitCenter"
                 android:background="@null"
@@ -50,7 +50,7 @@
                 android:layout_marginRight="5dp"
                 android:src="@drawable/telefon"
                 android:scaleType="fitCenter"
-                android:id="@+id/telefonla"
+                android:id="@+id/lifelineNextQuestion"
                 android:background="@null"
                 android:layout_height="match_parent" />
 
@@ -73,12 +73,12 @@
                 android:gravity="center"
                 android:text="99"
                 android:textColor="@android:color/white"
-                android:id="@+id/suregosterici"
+                android:id="@+id/timerTextView"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/saniye"
                 android:layout_height="40dp" />
             <TextView
-                android:id="@+id/sorucontainer"
+                android:id="@+id/questionTextView"
                 android:background="@drawable/sorucontainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                     android:weightSum="2">
 
                     <Button
-                        android:id="@+id/a"
+                        android:id="@+id/aButton"
                         android:background="@drawable/sorunormalcevap"
                         android:layout_width="1dp"
                         android:layout_margin="3dp"
@@ -110,7 +110,7 @@
                         android:tag="1" />
 
                     <Button
-                        android:id="@+id/b"
+                        android:id="@+id/bButton"
                         android:background="@drawable/sorunormalcevap"
                         android:layout_width="1dp"
                         android:textSize="10dp"
@@ -129,7 +129,7 @@
                     android:weightSum="2">
 
                     <Button
-                        android:id="@+id/c"
+                        android:id="@+id/cButton"
                         android:background="@drawable/sorunormalcevap"
                         android:layout_width="1dp"
                         android:padding="5dp"
@@ -141,7 +141,7 @@
                         android:tag="3" />
 
                     <Button
-                        android:id="@+id/d"
+                        android:id="@+id/dButton"
                         android:background="@drawable/sorunormalcevap"
                         android:layout_width="1dp"
                         android:layout_weight="1"
@@ -171,7 +171,7 @@
         android:weightSum="14">
 
         <Button
-            android:id="@+id/para12"
+            android:id="@+id/score1M"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -181,7 +181,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para11"
+            android:id="@+id/score250k"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -191,7 +191,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para10"
+            android:id="@+id/score125k"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -201,7 +201,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para9"
+            android:id="@+id/score60k"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -211,7 +211,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para8"
+            android:id="@+id/score30k"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -221,7 +221,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para7"
+            android:id="@+id/score15k"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -231,7 +231,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para6"
+            android:id="@+id/score7500"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -241,7 +241,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para5"
+            android:id="@+id/score5000"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -251,7 +251,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para4"
+            android:id="@+id/score3000"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -261,7 +261,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para3"
+            android:id="@+id/score2000"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -271,7 +271,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para2"
+            android:id="@+id/score1000"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -281,7 +281,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/para1"
+            android:id="@+id/score500"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
@@ -291,7 +291,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/cekil"
+            android:id="@+id/withdrawBtn"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="3dp"
