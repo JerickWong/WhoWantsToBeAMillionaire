@@ -30,6 +30,7 @@
                 android:id="@+id/lifeline5050"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/yuzdeelli"
+                android:onClick="use5050"
                 android:scaleType="fitCenter"
                 android:background="@null"
                 android:layout_height="match_parent" />
@@ -40,6 +41,7 @@
                 android:layout_marginRight="5dp"
                 android:id="@+id/lifelineDoubleDip"
                 android:src="@drawable/seyirci"
+                android:onClick="useDoubleDip"
                 android:scaleType="fitCenter"
                 android:background="@null"
                 android:layout_height="match_parent" />
@@ -49,6 +51,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/telefon"
+                android:onClick="useNextQuestion"
                 android:scaleType="fitCenter"
                 android:id="@+id/lifelineNextQuestion"
                 android:background="@null"

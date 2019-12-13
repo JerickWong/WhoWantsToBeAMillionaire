@@ -20,6 +20,7 @@ public class MainGameActivity extends AppCompatActivity {
     String score, currentQuestionScore;
     boolean used5050, usedNextQuestion, usedDoubleDip, endGame;
     ArrayList<Button> questions;
+    String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +90,36 @@ public class MainGameActivity extends AppCompatActivity {
     }
 
     public void startGame() {
+        int round = 1;
         while(!endGame) {
+            int questionWorth;
+
+            String worth = questions.get(round-1).getText().toString();
+            questionWorth = Integer.parseInt(worth.replaceAll(",",""));
+
+            if (questionWorth < 1000) {
+                category = "0";
+            }
+            else if (questionWorth < 15000)
+                category = "1000";
+            else if (questionWorth == 1000000)
+                category = "1000000";
 
 
-
+            round++;
         }
+    }
+
+    public void use5050() {
+
+    }
+
+    public void useDoubleDip() {
+
+    }
+
+    public void useNextQuestion() {
+
     }
 }
 
