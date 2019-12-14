@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter a username/password", Toast.LENGTH_SHORT).show();
         }
         else {
-            Intent intent = new Intent(this, GameActivity.class);
+            Intent intent = new Intent(this, MainMenu.class);
             startActivity(intent);
             finish();
         }

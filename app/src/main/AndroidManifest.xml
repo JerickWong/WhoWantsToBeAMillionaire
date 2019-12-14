@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".MainGameActivity" />
+        <activity android:name=".MainGameActivity"
+            android:screenOrientation="landscape" />
         <activity android:name=".LoginScreen" />
         <activity android:name=".MainMenu" />
         <activity android:name=".HelpActivity" />

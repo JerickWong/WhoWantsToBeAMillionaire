@@ -3,6 +3,7 @@ package com.example.whowantstobeamillionaire;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -58,8 +59,8 @@ public class MainGameActivity extends AppCompatActivity {
         score = "0";
         currentQuestionScore = "0";
 
-        initializeQuestions();
-        playStartMusic();
+//        initializeQuestions();
+//        playStartMusic();
     }
 
     public void initializeQuestions() {
@@ -110,15 +111,15 @@ public class MainGameActivity extends AppCompatActivity {
         }
     }
 
-    public void use5050() {
+    public void use5050(View view) {
 
     }
 
-    public void useDoubleDip() {
+    public void useDoubleDip(View view) {
 
     }
 
-    public void useNextQuestion() {
+    public void useNextQuestion(View view) {
 
     }
 }
