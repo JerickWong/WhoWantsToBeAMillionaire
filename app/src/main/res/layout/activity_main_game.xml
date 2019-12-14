@@ -109,8 +109,11 @@
                         android:textSize="10dp"
                         android:textColor="@android:color/white"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:tag="1" />
+                        android:layout_weight="1"						
+                        android:tag="1" 
+						android:onClick="chooseA"
+						/>
+						
 
                     <Button
                         android:id="@+id/bButton"
@@ -121,7 +124,9 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp"
                         android:layout_weight="1"
-                        android:tag="2" />
+                        android:tag="2"
+						android:onClick="chooseB"
+					/>
 
                 </LinearLayout>
 
@@ -140,8 +145,9 @@
                         android:layout_weight="1"
                         android:layout_margin="3dp"
                         android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"
-                        android:tag="3" />
+                        android:layout_height="wrap_content"						
+                        android:tag="3" 
+						android:onClick="chooseC" />
 
                     <Button
                         android:id="@+id/dButton"
@@ -153,7 +159,9 @@
                         android:padding="5dp"
                         android:textColor="@android:color/white"
                         android:layout_height="wrap_content"
-                        android:tag="4" />
+                        android:tag="4"
+						android:onClick="chooseD"	
+						/>
 
 
                 </LinearLayout>
