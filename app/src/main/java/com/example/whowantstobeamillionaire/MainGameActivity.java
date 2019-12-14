@@ -3,6 +3,8 @@ package com.example.whowantstobeamillionaire;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 
 public class MainGameActivity extends AppCompatActivity {
 
-    TextView questionTextView;
+    TextView questionTextView, timerTextView;
     Button aButton, bButton, cButton, dButton;
     Button score500, score1000, score2000, score3000, score5000, score7500,
             score15k, score30k, score60k, score125k, score250k, score1M;
@@ -22,6 +24,8 @@ public class MainGameActivity extends AppCompatActivity {
     boolean used5050, usedNextQuestion, usedDoubleDip, endGame;
     ArrayList<Button> questions;
     String category;
+    private long startTime, loopTime; // Loop start time and loop duration
+    private long DELAY = 33; // Delay in milliseconds between screen refreshes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,8 @@ public class MainGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_game);
 
         questionTextView = (TextView) findViewById(R.id.questionTextView);
+        timerTextView = (TextView) findViewById(R.id.timerTextView);
+
         aButton = (Button) findViewById(R.id.aButton);
         bButton = (Button) findViewById(R.id.bButton);
         cButton = (Button) findViewById(R.id.cButton);
@@ -93,22 +99,74 @@ public class MainGameActivity extends AppCompatActivity {
     public void startGame() {
         int round = 1;
         while(!endGame) {
+            startTime = SystemClock.uptimeMillis();
             int questionWorth;
 
             String worth = questions.get(round-1).getText().toString();
             questionWorth = Integer.parseInt(worth.replaceAll(",",""));
+            Question question;
 
             if (questionWorth < 1000) {
                 category = "0";
+                question = GameData.question0.get(0);
+                GameData.question0.remove(question);
+                setQuestion(question);
             }
             else if (questionWorth < 15000)
                 category = "1000";
             else if (questionWorth == 1000000)
                 category = "1000000";
 
+            //loop time
+            loopTime = SystemClock.uptimeMillis() - startTime;
+            if (loopTime<DELAY)
+                delayTime();
+
+            runTimer();
 
             round++;
         }
+    }
+
+    public void delayTime() {
+        Thread thread = new Thread ();
+        // wait for delay
+        try {
+            thread.sleep(DELAY - loopTime);
+        } catch (InterruptedException e) {
+            Log.e("Interrupted", "Interrupted wile sleeping");
+        }
+    }
+
+    public void runTimer() {
+        int timer = 60;
+        Thread thread = new Thread ();
+        // wait for delay
+        try {
+            thread.sleep(DELAY - loopTime);
+        } catch (InterruptedException e) {
+            Log.e("Interrupted", "Interrupted wile sleeping");
+        }
+
+        // 60 seconds timer
+        while(timer > 0) {
+            timerTextView.setText(timer);
+            try{
+                timer--;
+                thread.sleep(60000);   // 60 second timer
+
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
+    }
+
+    public void setQuestion(Question question) {
+        questionTextView.setText(question.getQuestion());
+        aButton.setText(question.getOptionA());
+        bButton.setText(question.getOptionB());
+        cButton.setText(question.getOptionC());
+        dButton.setText(question.getOptionD());
     }
 
     public void use5050(View view) {
