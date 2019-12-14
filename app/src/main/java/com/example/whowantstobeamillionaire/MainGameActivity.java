@@ -21,9 +21,9 @@ public class MainGameActivity extends AppCompatActivity {
     ImageButton lifeline5050, lifelineDoubleDip, lifelineNextQuestion;
     SoundBank soundBank;
     String score, currentQuestionScore;
-    boolean used5050, usedNextQuestion, usedDoubleDip, endGame;
+    boolean used5050, usedNextQuestion, usedDoubleDip, endGame, doubleDipActivated;
     ArrayList<Button> questions;
-    String category, answer;
+    String category, answer, secondAnswer;
     private long startTime, loopTime; // Loop start time and loop duration
     private long DELAY = 33; // Delay in milliseconds between screen refreshes
     Question currentQuestion;
@@ -63,9 +63,11 @@ public class MainGameActivity extends AppCompatActivity {
         usedDoubleDip = false;
         usedNextQuestion = false;
         endGame = false;
+        doubleDipActivated = false;
 
         score = "0";
         currentQuestionScore = "0";
+        secondAnswer = "";
 
         initializeQuestions();
         GameData.initializeDBQuestions();
@@ -102,6 +104,7 @@ public class MainGameActivity extends AppCompatActivity {
     public void startGame() {
         while(!endGame) {
             startTime = SystemClock.uptimeMillis();
+            answer = "";
 
             String worth = questions.get(round-1).getText().toString();
             questionWorth = Integer.parseInt(worth.replaceAll(",",""));
@@ -109,7 +112,7 @@ public class MainGameActivity extends AppCompatActivity {
             if (questionWorth < 1000) {
                 category = "0";
                 currentQuestion= GameData.question0.get(0);
-                GameData.question0.remove(currentQuestion);
+                GameData.question0.remove(0);
                 setQuestion(currentQuestion);
             }
             else if (questionWorth < 15000)
@@ -142,13 +145,6 @@ public class MainGameActivity extends AppCompatActivity {
     public void runTimer() {
         int timer = 60;
         Thread thread = new Thread ();
-        // wait for delay
-        try {
-            thread.sleep(DELAY - loopTime);
-
-        } catch (InterruptedException e) {
-            Log.e("Interrupted", "Interrupted wile sleeping");
-        }
 
         // 60 seconds timer
         while(timer > 0) {
@@ -156,21 +152,38 @@ public class MainGameActivity extends AppCompatActivity {
             try{
                 timer--;
                 thread.sleep(60000);   // 60 second timer
-                if (lifelineDoubleDip.isPressed() && !usedDoubleDip)
+                if (lifelineNextQuestion.isPressed() && !usedNextQuestion)
                     thread.interrupt();
-                else if (aButton.isPressed() || bButton.isPressed() || cButton.isPressed() || dButton.isPressed())
-                    thread.interrupt();
+
+                if (aButton.isPressed() || bButton.isPressed() || cButton.isPressed() || dButton.isPressed()) {
+
+                    // wait half a second for second answer to be set (for double dip)
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    // normal answer
+                    if (!doubleDipActivated)
+                        thread.interrupt();
+
+                    // used double dip
+                    else if (!secondAnswer.matches(""))
+                        thread.interrupt();
+                }
 
             } catch (InterruptedException e) {
                 Log.e("Interrupted the timer", "Sleep interrupted");
-                break;
+                break; // questionable, will need to test
             }
         }
     }
 
     public void checkAnswer() {
-        if (currentQuestion.getAnswer().equals(answer)) {
+        if (currentQuestion.getAnswer().equals(answer) || currentQuestion.getAnswer().equals(secondAnswer)) {
             currentScore += questionWorth;
+            doubleDipActivated = false;
 
             if (category.equals("1,000,000"))
                 endGame = true;
@@ -189,19 +202,32 @@ public class MainGameActivity extends AppCompatActivity {
     }
 
     public void chooseA(View view) {
-        answer = aButton.getText().toString();
+        if (answer.matches(""))
+            answer = aButton.getText().toString();
+        else if (doubleDipActivated)
+            secondAnswer = aButton.getText().toString();
+
     }
 
     public void chooseB (View view) {
-        answer = bButton.getText().toString();
+        if (answer.matches(""))
+            answer = bButton.getText().toString();
+        else if (doubleDipActivated)
+            secondAnswer = bButton.getText().toString();
     }
 
     public void chooseC (View view) {
-        answer = cButton.getText().toString();
+        if (answer.matches(""))
+            answer = cButton.getText().toString();
+        else if (doubleDipActivated)
+            secondAnswer = cButton.getText().toString();
     }
 
     public void chooseD (View view) {
-        answer = dButton.getText().toString();
+        if (answer.matches(""))
+            answer = dButton.getText().toString();
+        else if (doubleDipActivated)
+            secondAnswer = dButton.getText().toString();
     }
 
     // LIFELINES
@@ -215,7 +241,7 @@ public class MainGameActivity extends AppCompatActivity {
 
     public void useDoubleDip(View view) {
         if (!usedDoubleDip) {
-            // idk pano pa
+            doubleDipActivated = true;
             usedDoubleDip = true;
         }
     }
@@ -240,6 +266,7 @@ public class MainGameActivity extends AppCompatActivity {
 
             setQuestion(currentQuestion);
             runTimer();
+            startGame();
             usedNextQuestion = true;
         }
     }
