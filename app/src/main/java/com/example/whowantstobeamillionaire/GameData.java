@@ -23,7 +23,7 @@ public class GameData {
 
     public static Player player;
 
-    public static void initializeQuestions() {
+    public static void initializeDBQuestions() {
         databaseQuestions = FirebaseDatabase.getInstance().getReference("questions");
 
 

@@ -23,9 +23,11 @@ public class MainGameActivity extends AppCompatActivity {
     String score, currentQuestionScore;
     boolean used5050, usedNextQuestion, usedDoubleDip, endGame;
     ArrayList<Button> questions;
-    String category;
+    String category, answer;
     private long startTime, loopTime; // Loop start time and loop duration
     private long DELAY = 33; // Delay in milliseconds between screen refreshes
+    Question currentQuestion;
+    int questionWorth, currentScore = 0, round = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +67,9 @@ public class MainGameActivity extends AppCompatActivity {
         score = "0";
         currentQuestionScore = "0";
 
-//        initializeQuestions();
-//        playStartMusic();
+        initializeQuestions();
+        GameData.initializeDBQuestions();
+        playStartMusic();
     }
 
     public void initializeQuestions() {
@@ -97,20 +100,17 @@ public class MainGameActivity extends AppCompatActivity {
     }
 
     public void startGame() {
-        int round = 1;
         while(!endGame) {
             startTime = SystemClock.uptimeMillis();
-            int questionWorth;
 
             String worth = questions.get(round-1).getText().toString();
             questionWorth = Integer.parseInt(worth.replaceAll(",",""));
-            Question question;
 
             if (questionWorth < 1000) {
                 category = "0";
-                question = GameData.question0.get(0);
-                GameData.question0.remove(question);
-                setQuestion(question);
+                currentQuestion= GameData.question0.get(0);
+                GameData.question0.remove(currentQuestion);
+                setQuestion(currentQuestion);
             }
             else if (questionWorth < 15000)
                 category = "1000";
@@ -123,6 +123,7 @@ public class MainGameActivity extends AppCompatActivity {
                 delayTime();
 
             runTimer();
+            checkAnswer();
 
             round++;
         }
@@ -144,6 +145,7 @@ public class MainGameActivity extends AppCompatActivity {
         // wait for delay
         try {
             thread.sleep(DELAY - loopTime);
+
         } catch (InterruptedException e) {
             Log.e("Interrupted", "Interrupted wile sleeping");
         }
@@ -154,10 +156,27 @@ public class MainGameActivity extends AppCompatActivity {
             try{
                 timer--;
                 thread.sleep(60000);   // 60 second timer
+                if (lifelineDoubleDip.isPressed() && !usedDoubleDip)
+                    thread.interrupt();
+                else if (aButton.isPressed() || bButton.isPressed() || cButton.isPressed() || dButton.isPressed())
+                    thread.interrupt();
 
             } catch (InterruptedException e) {
+                Log.e("Interrupted the timer", "Sleep interrupted");
                 break;
             }
+        }
+    }
+
+    public void checkAnswer() {
+        if (currentQuestion.getAnswer().equals(answer)) {
+            currentScore += questionWorth;
+
+            if (category.equals("1,000,000"))
+                endGame = true;
+        } else {
+            currentScore = Integer.parseInt(category);
+            endGame = true;
         }
     }
 
@@ -169,16 +188,60 @@ public class MainGameActivity extends AppCompatActivity {
         dButton.setText(question.getOptionD());
     }
 
-    public void use5050(View view) {
+    public void chooseA(View view) {
+        answer = aButton.getText().toString();
+    }
 
+    public void chooseB (View view) {
+        answer = bButton.getText().toString();
+    }
+
+    public void chooseC (View view) {
+        answer = cButton.getText().toString();
+    }
+
+    public void chooseD (View view) {
+        answer = dButton.getText().toString();
+    }
+
+    // LIFELINES
+    public void use5050(View view) {
+        if (!used5050) {
+            bButton.setText("");
+            cButton.setText("");
+            used5050 = true;
+        }
     }
 
     public void useDoubleDip(View view) {
-
+        if (!usedDoubleDip) {
+            // idk pano pa
+            usedDoubleDip = true;
+        }
     }
 
     public void useNextQuestion(View view) {
+        if (!usedNextQuestion) {
 
+            if (currentQuestion.getCategory().equals("0")) {
+                currentQuestion = GameData.question0.get(0);
+                GameData.question0.remove(0);
+            } else if (currentQuestion.getCategory().equals("1,000")) {
+                currentQuestion = GameData.question1000.get(0);
+                GameData.question1000.remove(0);
+            } else if (currentQuestion.getCategory().equals("15,000")) {
+                currentQuestion = GameData.question15k.get(0);
+                GameData.question15k.remove(0);
+            } else if (currentQuestion.getCategory().equals("1,000,000")) {
+                currentQuestion = GameData.question1M.get(0);
+                GameData.question1M.remove(0);
+            }
+
+
+            setQuestion(currentQuestion);
+            runTimer();
+            usedNextQuestion = true;
+        }
     }
 }
 
