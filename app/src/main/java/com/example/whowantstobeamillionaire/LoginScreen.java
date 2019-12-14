@@ -31,6 +31,7 @@ public class LoginScreen extends AppCompatActivity {
             Toast.makeText(this, "Enter a username/password", Toast.LENGTH_SHORT).show();
         }
         else {
+            GameData.loginPlayer(usernameTextView.getText().toString());
             Intent intent = new Intent(this, MainMenu.class);
             startActivity(intent);
             finish();
