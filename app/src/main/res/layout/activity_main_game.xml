@@ -110,7 +110,7 @@
                         android:textColor="@android:color/white"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"						
-                        android:tag="1" 
+                        android:tag="1"
 						android:onClick="chooseA"
 						/>
 						
@@ -146,7 +146,7 @@
                         android:layout_margin="3dp"
                         android:textColor="@android:color/white"
                         android:layout_height="wrap_content"						
-                        android:tag="3" 
+                        android:tag="3"
 						android:onClick="chooseC" />
 
                     <Button
@@ -160,7 +160,7 @@
                         android:textColor="@android:color/white"
                         android:layout_height="wrap_content"
                         android:tag="4"
-						android:onClick="chooseD"	
+						android:onClick="chooseD"
 						/>
 
 

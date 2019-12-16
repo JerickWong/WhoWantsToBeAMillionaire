@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,11 +41,13 @@ public class MainGameActivity extends AppCompatActivity {
     int questionWorth, currentScore = 0, round = 1;
     DatabaseReference databaseQuestions, databasePlayers;
     Thread thread = new Thread();
+//    SQLiteDatabase sqLiteDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
+        DatabaseQuestions.initialize();
 
         questionTextView = (TextView) findViewById(R.id.questionTextView);
         timerTextView = (TextView) findViewById(R.id.timerTextView);
@@ -80,71 +84,124 @@ public class MainGameActivity extends AppCompatActivity {
         currentQuestionScore = 0;
         secondAnswer = "";
         questions = new ArrayList<>();
-        question0 = new ArrayList<>();
-        question1000 = new ArrayList<>();
-        question15k = new ArrayList<>();
-        question1M = new ArrayList<>();
+        question0 = DatabaseQuestions.questions0;
+        question1000 = DatabaseQuestions.questions1k;
+        question15k = DatabaseQuestions.questions15k;
+        question1M = DatabaseQuestions.questions1M;
         soundBank = new SoundBank(this);
 
         initializeQuestions();
-        initializeDBQuestions();
+//        initializeDBQuestions();
         playStartMusic();
-    }
 
-    public void initializeDBQuestions() {
-        databaseQuestions = FirebaseDatabase.getInstance().getReference("questions");
-
-        databaseQuestions.addValueEventListener(new ValueEventListener() {
+        questionTextView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot categories = dataSnapshot.child("categories");
-
-                int currentScoreWorth = Integer.parseInt(questions.get(round-1).getText().toString().replaceAll(",", ""));
-                Log.d("SCORE WORTH", "" + currentScoreWorth);
-                if (currentScoreWorth < 1000) {
-                    category = "0";
-                }
-                else if (currentScoreWorth < 15000)
-                    category = "1,000";
-                else if (currentScoreWorth < 1000000)
-                    category = "15,000";
-                else if (currentScoreWorth == 1000000)
-                    category = "1,000,000";
-
-                Question question = categories.child(category).child("question"+round).getValue(Question.class);
-
-                if (!thread.isAlive()) {
-                    questionTextView.setText(question.getQuestion());
-                    aButton.setText(question.getOptionA());
-                    bButton.setText(question.getOptionB());
-                    cButton.setText(question.getOptionC());
-                    dButton.setText(question.getOptionD());
-                }
-
-                if (aButton.isPressed()) {
-                    String answer = aButton.getText().toString();
-                } else if (bButton.isPressed()) {
-                    String answer = bButton.getText().toString();
-                } else if (cButton.isPressed()) {
-                    String answer = cButton.getText().toString();
-                } else if (dButton.isPressed()) {
-                    String answer = dButton.getText().toString();
-                }
-
-                if (question.getAnswer().equals(answer)) {
-
-                }
-
-
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                round++;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
+
+//    public void initializeDBQuestions() {
+//        databaseQuestions = FirebaseDatabase.getInstance().getReference("questions");
+//
+//        databaseQuestions.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                DataSnapshot categories = dataSnapshot.child("categories");
+//
+//                int currentScoreWorth = Integer.parseInt(questions.get(round-1).getText().toString().replaceAll(",", ""));
+//                Log.d("SCORE WORTH", "" + currentScoreWorth);
+//                if (currentScoreWorth < 1000) {
+//                    category = "0";
+//                }
+//                else if (currentScoreWorth < 15000)
+//                    category = "1,000";
+//                else if (currentScoreWorth < 1000000)
+//                    category = "15,000";
+//                else if (currentScoreWorth == 1000000)
+//                    category = "1,000,000";
+//
+//                Question question = categories.child(category).child("question"+round).getValue(Question.class);
+//
+//                if (!thread.isAlive()) {
+//                    questionTextView.setText(question.getQuestion());
+//                    aButton.setText(question.getOptionA());
+//                    bButton.setText(question.getOptionB());
+//                    cButton.setText(question.getOptionC());
+//                    dButton.setText(question.getOptionD());
+//                }
+//
+//                aButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        answer = aButton.getText().toString();
+//                    }
+//                });
+//
+//                bButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        answer = bButton.getText().toString();
+//                    }
+//                });
+//
+//                cButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        answer = cButton.getText().toString();
+//                    }
+//                });
+//
+//                dButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        answer = dButton.getText().toString();
+//                    }
+//                });
+//
+//                if (question.getAnswer().equals(answer)) {
+//                    currentScoreWorth = Integer.parseInt(questions.get(round-1).getText().toString().replaceAll(",", ""));
+//                    Log.d("SCORE WORTH", "" + currentScoreWorth);
+//                    if (currentScoreWorth < 1000) {
+//                        category = "0";
+//                    }
+//                    else if (currentScoreWorth < 15000)
+//                        category = "1,000";
+//                    else if (currentScoreWorth < 1000000)
+//                        category = "15,000";
+//                    else if (currentScoreWorth == 1000000)
+//                        category = "1,000,000";
+//
+//                    question = categories.child(category).child("question"+round).getValue(Question.class);
+//
+//                    questionTextView.setText(question.getQuestion());
+//                    aButton.setText(question.getOptionA());
+//                    bButton.setText(question.getOptionB());
+//                    cButton.setText(question.getOptionC());
+//                    dButton.setText(question.getOptionD());
+//                }
+//
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
+//    }
 
     public void initializeQuestions() {
         questions.add(score500);
@@ -274,32 +331,132 @@ public class MainGameActivity extends AppCompatActivity {
     }
 
     public void chooseA(View view) {
-        if (answer.matches(""))
             answer = aButton.getText().toString();
-        else if (doubleDipActivated)
+         if (doubleDipActivated)
             secondAnswer = aButton.getText().toString();
+
+        databaseQuestions.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                answer = aButton.getText().toString();
+
+                DataSnapshot categories = dataSnapshot.child("categories");
+
+                int currentScoreWorth = Integer.parseInt(questions.get(round-2).getText().toString().replaceAll(",", ""));
+                Log.d("SCORE WORTH", "" + currentScoreWorth);
+                if (currentScoreWorth < 1000) {
+                    category = "0";
+                }
+                else if (currentScoreWorth < 15000)
+                    category = "1,000";
+                else if (currentScoreWorth < 1000000)
+                    category = "15,000";
+                else if (currentScoreWorth == 1000000)
+                    category = "1,000,000";
+
+                Question question = categories.child(category).child("question"+round).getValue(Question.class);
+
+                if (answer.equals(question.getAnswer())) {
+                    currentScoreWorth = Integer.parseInt(questions.get(round-1).getText().toString().replaceAll(",", ""));
+                    Log.d("SCORE WORTH", "" + currentScoreWorth);
+                    if (currentScoreWorth < 1000) {
+                        category = "0";
+                    }
+                    else if (currentScoreWorth < 15000)
+                        category = "1,000";
+                    else if (currentScoreWorth < 1000000)
+                        category = "15,000";
+                    else if (currentScoreWorth == 1000000)
+                        category = "1,000,000";
+
+                    question = categories.child(category).child("question"+round).getValue(Question.class);
+
+                    questionTextView.setText(question.getQuestion());
+                    aButton.setText(question.getOptionA());
+                    bButton.setText(question.getOptionB());
+                    cButton.setText(question.getOptionC());
+                    dButton.setText(question.getOptionD());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     public void chooseB (View view) {
-        if (answer.matches(""))
             answer = bButton.getText().toString();
-        else if (doubleDipActivated)
+        if (doubleDipActivated)
             secondAnswer = bButton.getText().toString();
+
+        databaseQuestions.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                answer = bButton.getText().toString();
+
+                DataSnapshot categories = dataSnapshot.child("categories");
+
+                int currentScoreWorth = Integer.parseInt(questions.get(round-2).getText().toString().replaceAll(",", ""));
+                Log.d("SCORE WORTH", "" + currentScoreWorth);
+                if (currentScoreWorth < 1000) {
+                    category = "0";
+                }
+                else if (currentScoreWorth < 15000)
+                    category = "1,000";
+                else if (currentScoreWorth < 1000000)
+                    category = "15,000";
+                else if (currentScoreWorth == 1000000)
+                    category = "1,000,000";
+
+                Question question = categories.child(category).child("question"+round).getValue(Question.class);
+
+                if (answer.equals(question.getAnswer())) {
+                    currentScoreWorth = Integer.parseInt(questions.get(round-1).getText().toString().replaceAll(",", ""));
+                    Log.d("SCORE WORTH", "" + currentScoreWorth);
+                    if (currentScoreWorth < 1000) {
+                        category = "0";
+                    }
+                    else if (currentScoreWorth < 15000)
+                        category = "1,000";
+                    else if (currentScoreWorth < 1000000)
+                        category = "15,000";
+                    else if (currentScoreWorth == 1000000)
+                        category = "1,000,000";
+
+                    question = categories.child(category).child("question"+round).getValue(Question.class);
+
+                    questionTextView.setText(question.getQuestion());
+                    aButton.setText(question.getOptionA());
+                    bButton.setText(question.getOptionB());
+                    cButton.setText(question.getOptionC());
+                    dButton.setText(question.getOptionD());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void chooseC (View view) {
-        if (answer.matches(""))
             answer = cButton.getText().toString();
-        else if (doubleDipActivated)
+         if (doubleDipActivated)
             secondAnswer = cButton.getText().toString();
+
+
     }
 
     public void chooseD (View view) {
-        if (answer.matches(""))
             answer = dButton.getText().toString();
-        else if (doubleDipActivated)
+         if (doubleDipActivated)
             secondAnswer = dButton.getText().toString();
+
+        
     }
 
     // LIFELINES
@@ -309,6 +466,7 @@ public class MainGameActivity extends AppCompatActivity {
             cButton.setText("");
             used5050 = true;
         }
+        lifeline5050.setImageResource(R.drawable.yokelli);
     }
 
     public void useDoubleDip(View view) {
@@ -316,31 +474,17 @@ public class MainGameActivity extends AppCompatActivity {
             doubleDipActivated = true;
             usedDoubleDip = true;
         }
+        lifelineDoubleDip.setImageResource(R.drawable.yokseyirci);
     }
 
     public void useNextQuestion(View view) {
         if (!usedNextQuestion) {
 
-            if (currentQuestion.getCategory().equals("0")) {
-                currentQuestion = GameData.question0.get(0);
-                GameData.question0.remove(0);
-            } else if (currentQuestion.getCategory().equals("1,000")) {
-                currentQuestion = GameData.question1000.get(0);
-                GameData.question1000.remove(0);
-            } else if (currentQuestion.getCategory().equals("15,000")) {
-                currentQuestion = GameData.question15k.get(0);
-                GameData.question15k.remove(0);
-            } else if (currentQuestion.getCategory().equals("1,000,000")) {
-                currentQuestion = GameData.question1M.get(0);
-                GameData.question1M.remove(0);
-            }
+            thread.interrupt(); // i know nag move lang siya to the next prize question but eh
 
-
-            setQuestion(currentQuestion);
-            runTimer();
-            startGame();
             usedNextQuestion = true;
         }
+        lifelineNextQuestion.setImageResource(R.drawable.yoktelefon);
     }
 }
 
