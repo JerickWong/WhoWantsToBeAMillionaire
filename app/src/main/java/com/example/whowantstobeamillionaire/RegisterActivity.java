@@ -23,18 +23,27 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        if (usernameEditText.getText().toString().matches(""))
+        String username = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        String confirmPassword = confirmPasswordEditText.getText().toString();
+
+        if (username.matches(""))
             Toast.makeText(this, "Enter a username!", Toast.LENGTH_SHORT).show();
-        else if (passwordEditText.getText().toString().matches(""))
+        else if (password.matches(""))
             Toast.makeText(this, "Enter a password!", Toast.LENGTH_SHORT).show();
-        else if (confirmPasswordEditText.getText().toString().matches(""))
+        else if (confirmPassword.matches(""))
             Toast.makeText(this, "Confirm your password!", Toast.LENGTH_SHORT).show();
-        else if (!passwordEditText.getText().toString().equals(confirmPasswordEditText.getText().toString()))
+        else if (!password.equals(confirmPassword))
             Toast.makeText(this, "Password did not match!", Toast.LENGTH_SHORT).show();
         else {
             // MAY CHECKING PA IF USERNAME EXISTS FROM FIREBASE
-            Intent intent = new Intent(this, LoginScreen.class);
-            startActivity(intent);
+            if (!GameData.registerPlayer(username, password)) {
+                Toast.makeText(this, "Username already exists!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Register succesfully!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, LoginScreen.class);
+                startActivity(intent);
+            }
             finish();
         }
     }
