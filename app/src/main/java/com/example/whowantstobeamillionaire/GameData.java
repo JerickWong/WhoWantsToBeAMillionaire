@@ -26,35 +26,35 @@ public class GameData {
     public static boolean registered, loggedin;
 
     public static void initializeDBQuestions() {
-        Log.e("nullpointer?", "before retrieving database questions");
         databaseQuestions = FirebaseDatabase.getInstance().getReference("questions");
 
-        Log.e("nullpointer?", "after retrieving database questions");
-        databaseQuestions.addValueEventListener(new ValueEventListener() {
+        databaseQuestions.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.e("nullpointer?", "before retrieving database categories");
+                Log.e("ON DATA CHANGE", "before retrieving database categories");
                 DataSnapshot categories = dataSnapshot.child("categories");
-                Log.e("nullpointer?", "after retrieving database questions");
+                Log.e("ON DATA CHANGE", "after retrieving database categories");
                 for (DataSnapshot postSnapShot : categories.getChildren()) {
                     if (postSnapShot.getKey().equals("0")) {
                         for (DataSnapshot snapshot: postSnapShot.getChildren()) {
-                            Question question = new Question(snapshot.getValue(Question.class));
+                            Log.e("YESYESYES", "PLEASE NAMANE");
+                            Question question = snapshot.getValue(Question.class);
+//                            Question question = new Question(snapshot.getValue(Question.class));
                             question0.add(question);
                         }
                     } else if (postSnapShot.getKey().equals("1,000")) {
                         for (DataSnapshot snapshot: postSnapShot.getChildren()) {
-                            Question question = new Question(snapshot.getValue(Question.class));
+                            Question question = snapshot.getValue(Question.class);
                             question1000.add(question);
                         }
                     } else if (postSnapShot.getKey().equals("15,000")) {
                         for (DataSnapshot snapshot: postSnapShot.getChildren()) {
-                            Question question = new Question(snapshot.getValue(Question.class));
+                            Question question = snapshot.getValue(Question.class);
                             question15k.add(question);
                         }
                     } else if (postSnapShot.getKey().equals("1,000,0000")) {
                         for (DataSnapshot snapshot: postSnapShot.getChildren()) {
-                            Question question = new Question(snapshot.getValue(Question.class));
+                            Question question = snapshot.getValue(Question.class);
                             question1M.add(question);
                         }
                     }
@@ -64,7 +64,7 @@ public class GameData {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.e("DB CANCELLED?", "GAME DATA INITIALIZE DB QUESTIONS");
             }
         });
     }
@@ -124,4 +124,5 @@ public class GameData {
         });
 
     }
+
 }

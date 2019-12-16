@@ -4,11 +4,13 @@ public class Player {
     private String username;
     private String password;
     private int totalEarnings;
+    private int tempEarnings;
 
     public Player(String username, String password) {
         this.username = username;
         this.password = password;
         totalEarnings = 0;
+        tempEarnings = 0;
     }
 
     public Player() {
@@ -19,6 +21,7 @@ public class Player {
         username = value.username;
         password = value.password;
         totalEarnings = value.totalEarnings;
+        tempEarnings = value.tempEarnings;
     }
 
     public String getUsername() {
@@ -31,5 +34,9 @@ public class Player {
 
     public int getTotalEarnings() {
         return totalEarnings;
+    }
+
+    public int getTempEarnings() {
+        return tempEarnings;
     }
 }

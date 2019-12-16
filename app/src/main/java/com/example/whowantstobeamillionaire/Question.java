@@ -20,6 +20,17 @@ public class Question {
         optionD = D;
         category = categ;
     }
+    public Question (String ques, String ans, String A, String B, String C, String D, String categ) {
+        question = ques;
+        answer = ans;
+        optionA = A;
+        optionB = B;
+        optionC = C;
+        optionD = D;
+        category = categ;
+    }
+
+    public Question() {}
 
     public Question(Question value) {
         question = value.question;
