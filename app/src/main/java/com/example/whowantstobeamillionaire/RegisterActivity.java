@@ -43,8 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, "Register succesfully!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, LoginScreen.class);
                 startActivity(intent);
+                finish();
             }
-            finish();
         }
     }
 }

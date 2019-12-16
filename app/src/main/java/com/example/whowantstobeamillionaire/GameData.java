@@ -23,7 +23,7 @@ public class GameData {
     static DatabaseReference databasePlayers;
 
     public static Player player;
-    private static boolean registered;
+    public static boolean registered, loggedin;
 
     public static void initializeDBQuestions() {
         Log.e("nullpointer?", "before retrieving database questions");
@@ -71,7 +71,7 @@ public class GameData {
 
     public static boolean registerPlayer(final String username, final String password) {
         databasePlayers = FirebaseDatabase.getInstance().getReference("players");
-        registered = false;
+
         databasePlayers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -84,7 +84,8 @@ public class GameData {
                 if (!exist) {
                     databasePlayers.child(username).setValue(new Player(username, password));
                     registered = true;
-                }
+                } else
+                    registered = false;
             }
 
             @Override
@@ -96,18 +97,24 @@ public class GameData {
         return registered;
     }
 
-    public static boolean loginPlayer(final String username) {
+    public static void loginPlayer(final String username) {
         databasePlayers = FirebaseDatabase.getInstance().getReference("players");
 
         databasePlayers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren())
+                loggedin = false;
+                Log.e("BEFORE ITERATION", "BEFORE FOR LOOP");
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Log.e("INSIDE FOR LOOP", "DITO DAPAT KA");
                     if (postSnapshot.getKey().equals(username)) {
-
-                        player = new Player(postSnapshot.getValue(Player.class));
+                        player = postSnapshot.getValue(Player.class);
+                        loggedin = true;
+                        Log.e("LOGIN", "LOGIN SUCCESSFULLY");
                     }
+                }
+
+                Log.e("LOGGEDIN VALUE", "" + loggedin);
             }
 
             @Override
@@ -115,10 +122,6 @@ public class GameData {
 
             }
         });
-        if (player == null) {
-            return false;
-        }
 
-        return true;
     }
 }

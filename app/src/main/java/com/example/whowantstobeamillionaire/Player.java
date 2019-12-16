@@ -11,6 +11,10 @@ public class Player {
         totalEarnings = 0;
     }
 
+    public Player() {
+
+    }
+
     public Player(Player value) {
         username = value.username;
         password = value.password;

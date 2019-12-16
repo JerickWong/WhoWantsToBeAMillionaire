@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +32,9 @@ public class LoginScreen extends AppCompatActivity {
             Toast.makeText(this, "Enter a username/password", Toast.LENGTH_SHORT).show();
         }
         else {
-            if (!GameData.loginPlayer(usernameTextView.getText().toString())) {
+            GameData.loginPlayer(usernameTextView.getText().toString());
+
+            if (GameData.loggedin) {
                 Toast.makeText(this, "Username and password did not match!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Login Successfully!", Toast.LENGTH_SHORT).show();
