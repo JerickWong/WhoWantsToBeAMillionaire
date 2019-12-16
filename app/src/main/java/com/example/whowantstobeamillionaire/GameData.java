@@ -1,5 +1,6 @@
 package com.example.whowantstobeamillionaire;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,10 +14,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class GameData {
-    public static ArrayList<Question> question0;
-    public static ArrayList<Question> question1000;
-    public static ArrayList<Question> question15k;
-    public static ArrayList<Question> question1M;
+    public static ArrayList<Question> question0 = new ArrayList<>();
+    public static ArrayList<Question> question1000 = new ArrayList<>();
+    public static ArrayList<Question> question15k = new ArrayList<>();
+    public static ArrayList<Question> question1M = new ArrayList<>();
 
     static DatabaseReference databaseQuestions;
     static DatabaseReference databasePlayers;
@@ -24,33 +25,35 @@ public class GameData {
     public static Player player;
 
     public static void initializeDBQuestions() {
+        Log.e("nullpointer?", "before retrieving database questions");
         databaseQuestions = FirebaseDatabase.getInstance().getReference("questions");
 
-
+        Log.e("nullpointer?", "after retrieving database questions");
         databaseQuestions.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("nullpointer?", "before retrieving database categories");
                 DataSnapshot categories = dataSnapshot.child("categories");
-
+                Log.e("nullpointer?", "after retrieving database questions");
                 for (DataSnapshot postSnapShot : categories.getChildren()) {
                     if (postSnapShot.getKey().equals("0")) {
                         for (DataSnapshot snapshot: postSnapShot.getChildren()) {
-                            Question question = snapshot.getValue(Question.class);
+                            Question question = new Question(snapshot.getValue(Question.class));
                             question0.add(question);
                         }
                     } else if (postSnapShot.getKey().equals("1,000")) {
                         for (DataSnapshot snapshot: postSnapShot.getChildren()) {
-                            Question question = snapshot.getValue(Question.class);
+                            Question question = new Question(snapshot.getValue(Question.class));
                             question1000.add(question);
                         }
                     } else if (postSnapShot.getKey().equals("15,000")) {
                         for (DataSnapshot snapshot: postSnapShot.getChildren()) {
-                            Question question = snapshot.getValue(Question.class);
+                            Question question = new Question(snapshot.getValue(Question.class));
                             question15k.add(question);
                         }
                     } else if (postSnapShot.getKey().equals("1,000,0000")) {
                         for (DataSnapshot snapshot: postSnapShot.getChildren()) {
-                            Question question = snapshot.getValue(Question.class);
+                            Question question = new Question(snapshot.getValue(Question.class));
                             question1M.add(question);
                         }
                     }
@@ -66,7 +69,7 @@ public class GameData {
     }
 
     public static void registerPlayer(final String username, final String password) {
-        databasePlayers = FirebaseDatabase.getInstance().getReference("Players");
+        databasePlayers = FirebaseDatabase.getInstance().getReference("players");
 
         databasePlayers.addValueEventListener(new ValueEventListener() {
             @Override

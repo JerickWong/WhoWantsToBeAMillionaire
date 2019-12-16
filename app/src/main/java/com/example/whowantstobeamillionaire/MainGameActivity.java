@@ -68,6 +68,8 @@ public class MainGameActivity extends AppCompatActivity {
         score = "0";
         currentQuestionScore = "0";
         secondAnswer = "";
+        questions = new ArrayList<>();
+        soundBank = new SoundBank(this);
 
         initializeQuestions();
         GameData.initializeDBQuestions();

@@ -21,6 +21,16 @@ public class Question {
         category = categ;
     }
 
+    public Question(Question value) {
+        question = value.question;
+        answer = value.answer;
+        optionA = value.optionA;
+        optionB = value.optionB;
+        optionC = value.optionC;
+        optionD = value.optionD;
+        category = value.category;
+    }
+
     public String getID() {
         return ID;
     }
