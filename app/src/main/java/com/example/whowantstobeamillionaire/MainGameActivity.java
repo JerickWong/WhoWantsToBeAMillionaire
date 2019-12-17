@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainGameActivity extends AppCompatActivity {
 
@@ -41,6 +44,8 @@ public class MainGameActivity extends AppCompatActivity {
     int questionWorth, currentScore = 0, round = 1;
     DatabaseReference databaseQuestions, databasePlayers;
     Thread thread = new Thread();
+    int timer;
+    CountDownTimer countDownTimer;
 //    SQLiteDatabase sqLiteDatabase;
 
     @Override
@@ -227,12 +232,12 @@ public class MainGameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        startGame();
+        startGame();
     }
 
     public void startGame() {
-//        while(!endGame) {
-//            startTime = SystemClock.uptimeMillis();
+        while(!endGame) {
+            delayTime();
             answer = "";
 
             String worth = questions.get(round-1).getText().toString();
@@ -241,31 +246,39 @@ public class MainGameActivity extends AppCompatActivity {
             if (questionWorth < 1000) {
                 category = "0";
                 Log.e("ARRAYLIST SIZE", "" + question0.size());
-//                currentQuestion= question0.get(0);
-//                question0.remove(0);
-//                setQuestion(currentQuestion);
+                currentQuestion= question0.get(0);
+                question0.remove(0);
+                setQuestion(currentQuestion);
             }
-            else if (questionWorth < 15000)
-                category = "1000";
-            else if (questionWorth == 1000000)
-                category = "1000000";
+            else if (questionWorth < 15000) {
+                currentQuestion= question1000.get(0);
+                question1000.remove(0);
+                setQuestion(currentQuestion);
+                category = "1,000";
+            }
+            else if (questionWorth < 1000000) {
+                currentQuestion= question15k.get(0);
+                question15k.remove(0);
+                setQuestion(currentQuestion);
+                category = "15,000";
+            }
+            else if (questionWorth == 1000000) {
+                currentQuestion= question1M.get(0);
+                question1M.remove(0);
+                setQuestion(currentQuestion);
+                category = "1,000,000";
+            }
 
-            //loop time
-            loopTime = SystemClock.uptimeMillis() - startTime;
-//            if (loopTime<DELAY)
-//                delayTime();
+            runTimer();
 
-//            runTimer();
-//            checkAnswer();
-
-            round++;
-//        }
+//            round++;
+        }
     }
 
     public void delayTime() {
         // wait for delay
         try {
-            thread.sleep(DELAY - loopTime);
+            thread.sleep(3000);
             Log.e("DELAYING TIME", "Inside Thread");
         } catch (InterruptedException e) {
             Log.e("Interrupted", "Interrupted wile sleeping");
@@ -273,51 +286,96 @@ public class MainGameActivity extends AppCompatActivity {
     }
 
     public void runTimer() {
-        int timer = 60;
+        timer = 60;
+//
+//        // 60 seconds timer
+//        while(timer > 0) {
+////            timerTextView.setText(timer+"");
+//            try{
+//                timer--;
+//                thread.sleep(60000);   // 60 second timer
+//
+//            } catch (InterruptedException e) {
+//                Log.e("Interrupted the timer", "Sleep interrupted");
+//            }
+//        }
 
-        // 60 seconds timer
-        while(timer > 0) {
-            timerTextView.setText(timer+"");
-            try{
-                timer--;
-                thread.sleep(60000);   // 60 second timer
-                if (lifelineNextQuestion.isPressed() && !usedNextQuestion)
-                    thread.interrupt();
-
-                if (aButton.isPressed() || bButton.isPressed() || cButton.isPressed() || dButton.isPressed()) {
-
-                    // wait half a second for second answer to be set (for double dip)
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    // normal answer
-                    if (!doubleDipActivated)
-                        thread.interrupt();
-
-                    // used double dip
-                    else if (!secondAnswer.matches(""))
-                        thread.interrupt();
-                }
-
-            } catch (InterruptedException e) {
-                Log.e("Interrupted the timer", "Sleep interrupted");
-                break; // questionable, will need to test
+//        thread = new Thread(){
+//            @Override
+//            public void run() {
+//                while(!isInterrupted()) {
+//                    try{
+//                        thread.sleep(60000);
+//                            thread.start();
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                timer--;
+//
+//                                timerTextView.setText(String.valueOf(timer));
+//                            }
+//                        });
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        };
+        countDownTimer = new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText("" + millisUntilFinished / 1000);
             }
-        }
+
+            public void onFinish() {
+                timerTextView.setText("Time's up!");
+            }
+        }.start();
+
     }
 
     public void checkAnswer() {
+
+
         if (currentQuestion.getAnswer().equals(answer) || currentQuestion.getAnswer().equals(secondAnswer)) {
+
+            if (aButton.getText().toString().equals(currentQuestion.getAnswer()))
+                aButton.setBackground(getResources().getDrawable(R.drawable.rightchoicebox));
+            else if (aButton.getText().toString().equals(currentQuestion.getAnswer()))
+                bButton.setBackground(getResources().getDrawable(R.drawable.rightchoicebox));
+            else if (cButton.getText().toString().equals(currentQuestion.getAnswer()))
+                cButton.setBackground(getResources().getDrawable(R.drawable.rightchoicebox));
+            else if (dButton.getText().toString().equals(currentQuestion.getAnswer()))
+                dButton.setBackground(getResources().getDrawable(R.drawable.rightchoicebox));
+
+            try{
+                thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             currentScore += questionWorth;
             doubleDipActivated = false;
 
             if (category.equals("1,000,000"))
                 endGame = true;
         } else {
-            currentScore = Integer.parseInt(category);
+
+            if (aButton.getText().toString().equals(currentQuestion.getAnswer()))
+                aButton.setBackground(getResources().getDrawable(R.drawable.wrongchoicebox));
+            else if (aButton.getText().toString().equals(currentQuestion.getAnswer()))
+                bButton.setBackground(getResources().getDrawable(R.drawable.wrongchoicebox));
+            else if (cButton.getText().toString().equals(currentQuestion.getAnswer()))
+                cButton.setBackground(getResources().getDrawable(R.drawable.wrongchoicebox));
+            else if (dButton.getText().toString().equals(currentQuestion.getAnswer()))
+                dButton.setBackground(getResources().getDrawable(R.drawable.wrongchoicebox));
+
+            try{
+                thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            currentScore = Integer.parseInt(category.replaceAll(",", ""));
             endGame = true;
         }
     }
@@ -335,56 +393,9 @@ public class MainGameActivity extends AppCompatActivity {
          if (doubleDipActivated)
             secondAnswer = aButton.getText().toString();
 
-        databaseQuestions.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                answer = aButton.getText().toString();
 
-                DataSnapshot categories = dataSnapshot.child("categories");
-
-                int currentScoreWorth = Integer.parseInt(questions.get(round-2).getText().toString().replaceAll(",", ""));
-                Log.d("SCORE WORTH", "" + currentScoreWorth);
-                if (currentScoreWorth < 1000) {
-                    category = "0";
-                }
-                else if (currentScoreWorth < 15000)
-                    category = "1,000";
-                else if (currentScoreWorth < 1000000)
-                    category = "15,000";
-                else if (currentScoreWorth == 1000000)
-                    category = "1,000,000";
-
-                Question question = categories.child(category).child("question"+round).getValue(Question.class);
-
-                if (answer.equals(question.getAnswer())) {
-                    currentScoreWorth = Integer.parseInt(questions.get(round-1).getText().toString().replaceAll(",", ""));
-                    Log.d("SCORE WORTH", "" + currentScoreWorth);
-                    if (currentScoreWorth < 1000) {
-                        category = "0";
-                    }
-                    else if (currentScoreWorth < 15000)
-                        category = "1,000";
-                    else if (currentScoreWorth < 1000000)
-                        category = "15,000";
-                    else if (currentScoreWorth == 1000000)
-                        category = "1,000,000";
-
-                    question = categories.child(category).child("question"+round).getValue(Question.class);
-
-                    questionTextView.setText(question.getQuestion());
-                    aButton.setText(question.getOptionA());
-                    bButton.setText(question.getOptionB());
-                    cButton.setText(question.getOptionC());
-                    dButton.setText(question.getOptionD());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        countDownTimer.cancel();
+        checkAnswer();
     }
 
     public void chooseB (View view) {
@@ -392,55 +403,8 @@ public class MainGameActivity extends AppCompatActivity {
         if (doubleDipActivated)
             secondAnswer = bButton.getText().toString();
 
-        databaseQuestions.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                answer = bButton.getText().toString();
-
-                DataSnapshot categories = dataSnapshot.child("categories");
-
-                int currentScoreWorth = Integer.parseInt(questions.get(round-2).getText().toString().replaceAll(",", ""));
-                Log.d("SCORE WORTH", "" + currentScoreWorth);
-                if (currentScoreWorth < 1000) {
-                    category = "0";
-                }
-                else if (currentScoreWorth < 15000)
-                    category = "1,000";
-                else if (currentScoreWorth < 1000000)
-                    category = "15,000";
-                else if (currentScoreWorth == 1000000)
-                    category = "1,000,000";
-
-                Question question = categories.child(category).child("question"+round).getValue(Question.class);
-
-                if (answer.equals(question.getAnswer())) {
-                    currentScoreWorth = Integer.parseInt(questions.get(round-1).getText().toString().replaceAll(",", ""));
-                    Log.d("SCORE WORTH", "" + currentScoreWorth);
-                    if (currentScoreWorth < 1000) {
-                        category = "0";
-                    }
-                    else if (currentScoreWorth < 15000)
-                        category = "1,000";
-                    else if (currentScoreWorth < 1000000)
-                        category = "15,000";
-                    else if (currentScoreWorth == 1000000)
-                        category = "1,000,000";
-
-                    question = categories.child(category).child("question"+round).getValue(Question.class);
-
-                    questionTextView.setText(question.getQuestion());
-                    aButton.setText(question.getOptionA());
-                    bButton.setText(question.getOptionB());
-                    cButton.setText(question.getOptionC());
-                    dButton.setText(question.getOptionD());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        countDownTimer.cancel();
+        checkAnswer();
     }
 
     public void chooseC (View view) {
@@ -448,7 +412,8 @@ public class MainGameActivity extends AppCompatActivity {
          if (doubleDipActivated)
             secondAnswer = cButton.getText().toString();
 
-
+        countDownTimer.cancel();
+        checkAnswer();
     }
 
     public void chooseD (View view) {
@@ -456,7 +421,8 @@ public class MainGameActivity extends AppCompatActivity {
          if (doubleDipActivated)
             secondAnswer = dButton.getText().toString();
 
-        
+        countDownTimer.cancel();
+        checkAnswer();
     }
 
     // LIFELINES
